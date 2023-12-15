@@ -30,12 +30,15 @@ function charts(sample) {
         let currentSample = samplesList[0]
         let otu_ids = currentSample.otu_ids;
         // format otu_ids
-        let formatted_otu_ids = otu_ids.map(i => `OTU ${i}`)
+        let formatted_otu_ids = otu_ids.map(i => `OTU ${i}`).slice(0,10).reverse()
+            console.log(formatted_otu_ids)
         // get other values for x & y
         let otu_labels = currentSample.otu_labels;
         let sample_values = currentSample.sample_values;
+            console.log(sample_values)
         // filter only to top 10 (need to figure out how to reverse without messing up graph)
-        let sample_values_10 = currentSample.sample_values.slice(0,10);
+        let sample_values_10 = currentSample.sample_values.slice(0,10).reverse();
+            console.log(sample_values_10);
 
         // horizontal bar graph
         // set up bar graph data
@@ -68,7 +71,8 @@ function charts(sample) {
               }];
         let bubbleLayout = {
             height: 500,
-            width: 1000
+            width: 1000,
+            xaxis: {title: {text: 'OTU ID'}}
         }
         // plot bubble chart
         Plotly.newPlot("bubble", bubbleData, bubbleLayout)
@@ -90,9 +94,9 @@ function demoInfo(sample) {
     // empty out box
     metadataBox.html("")
     // append h6 and fill with text pulled from dictionary key & value pairs
-    Object.entries(currentData).forEach((([key,value]) => {
-        metadataBox.append("h6").text(key + ": " + value);
-    }));
+    Object.entries(currentData).forEach(([key,value]) => {
+        metadataBox.append("h6").text(key + ": " + value)
+    });
 })
 }
 // create optionChanged function & call both functions
